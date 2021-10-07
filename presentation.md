@@ -175,11 +175,20 @@ open http://localhost:8080
 docker rm -f some-caddy
 ```
 
-### NodeJS
-
 ### Go
 
+- [1_hello-world-cli-go/readme.md](1_hello-world-cli-go/readme.md)
+- [2_hello-world-cli-go-multi/readme.md](2_hello-world-cli-go-multi/readme.md)
+- [3_hello-world-http-go/readme.md](3_hello-world-http-go/readme.md)
+
+### NodeJS
+
+- [4_hello-world-cli-js/readme.md](4_hello-world-cli-js/readme.md)
+- [5_hello-world-http-js/readme.md](5_hello-world-http-js/readme.md)
+
 ### Java
+
+- [6_hello-world-http-java/readme.md](6_hello-world-http-java/readme.md)
 
 ## Application, without `docker-compose`
 
