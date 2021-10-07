@@ -1,0 +1,9 @@
+# Modified example source, which is also a good reference.
+# https://docs.docker.com/language/nodejs/build-images/
+FROM node:16
+
+WORKDIR /app
+
+COPY . .
+
+CMD [ "node", "server.js" ]

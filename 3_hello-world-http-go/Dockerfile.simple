@@ -1,0 +1,10 @@
+FROM scratch
+
+# Copy the app from my the project into the image
+COPY ./bin/hello-world-http_amd64-linux /app
+
+# This does nothing, but is very good documentation
+EXPOSE 3000
+
+# The image should run the app when it starts
+CMD [ "/app" ]
