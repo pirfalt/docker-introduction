@@ -77,7 +77,6 @@ function createRouter({ pgRepo, redisRepo }) {
     h(async (req, res) => {
       const id = "list";
       const c = await redisRepo.getBlob(id);
-      console.log(c);
       if (c != null) {
         res.setHeader("cache-hit", "true");
         res.json(JSON.parse(c));
@@ -104,7 +103,16 @@ function createRouter({ pgRepo, redisRepo }) {
 }
 
 async function createPostgresRepository(db) {
-  await db.query(`
+  let client;
+  do {
+    try {
+      client = await db.connect();
+    } catch (e) {
+      console.error(e);
+    }
+  } while (client == null);
+
+  await client.query(`
     create table if not exists kv(
       id UUID primary key default gen_random_uuid(),
       value jsonb not null
@@ -156,7 +164,6 @@ async function createRedisRepository(db, cacheTimeSec = 5) {
 
   const get = promisify(db.get).bind(db);
   const setex = promisify(db.setex).bind(db);
-  const scan = promisify(db.scan).bind(db);
 
   return {
     async saveBlob(id, val) {

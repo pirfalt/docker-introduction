@@ -181,20 +181,61 @@ docker rm -f some-caddy
 
 ### Java
 
+## Application, without `docker-compose`
+
+Let's run a NodeJS application, which had Postgres and Redis as service dependencies.
+
+### Dependencies
+
+```sh
+docker run --name app-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:14
+docker rm -f app-postgres
+
+docker run --name app-redis -d -p 6379:6379 redis:6
+docker rm -f app-redis
+```
+
+### App - dev
+
+```sh
+npm run dev
+```
+
+### App - prod
+
+```sh
+docker build -t compose-js .
+docker run --name app-node \
+  --init \
+  --rm \
+  -p 3000:3000 \
+  -e PG_CONN="postgresql://postgres:mysecretpassword@$(myip):5432/postgres" \
+  -e REDIS_CONN="redis://$(myip):6379" \
+  compose-js
+```
+
+### Tests
+
+```sh
+curl -i http://localhost:3000/
+curl -i http://localhost:3000/bf6faa84-dc1a-4824-be29-f8a541a77e72
+curl -i -X POST -H 'content-type: application/json' --data '{"name": "me"}' http://localhost:3000/
+curl -i -X POST -H 'content-type: application/json' --data '{"key": "value"}' http://localhost:3000/
+```
+
+### Inspect
+
+```sh
+docker ps
+```
+
 ## `docker-compose`
 
 ```sh
-docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres:14
-docker rm -f some-postgres
-
-docker run --name some-redis -d -p 6379:6379 redis:6
-docker rm -f some-redis
-
-
-curl -i http://localhost:3000/
-curl -i http://localhost:3000/82317d4b-df0b-4665-9326-fdafd30d53ed
-curl -i -X POST -H 'content-type: application/json' --data '{"name": "me"}' http://localhost:3000/
-curl -i -X POST -H 'content-type: application/json' --data '{"key": "value"}' http://localhost:3000/
+docker-compose up
+docker-compose up -d
+docker-compose down
+docker-compose up --build
 ```
 
 ## Background
