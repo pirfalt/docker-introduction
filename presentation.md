@@ -39,7 +39,8 @@ https://hub.docker.com/_/postgres
 # Server
 docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres:14
 docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres:11
-docker container rm -f some-postgres
+docker container stop some-postgres
+docker container rm some-postgres
 
 # Client
 docker exec -it some-postgres psql "postgresql://postgres:mysecretpassword@localhost:5432/postgres"
@@ -248,6 +249,22 @@ docker-compose up
 docker-compose up -d
 docker-compose down
 docker-compose up --build
+```
+
+## Cleanup
+
+```sh
+# Check
+docker container list
+docker image list
+docker network list
+
+docker container list -a
+
+# Nuke
+docker container prune
+docker image prune
+docker network prune
 ```
 
 ## Background
