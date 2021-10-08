@@ -8,8 +8,8 @@ npm run dev
 npm run start
 
 # Client
-curl http://localhost:3000
-curl http://localhost:3000?name=you
+curl -i http://localhost:3000
+curl -i http://localhost:3000?name=you
 ```
 
 ## Build and run
