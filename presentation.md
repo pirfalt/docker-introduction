@@ -1,10 +1,11 @@
 # Introduction to Docker
 
-## Demo time
+https://www.docker.com/
 
 ## Dockerhub
 
 Pre-build images!
+https://hub.docker.com/
 
 ### Hello World
 
