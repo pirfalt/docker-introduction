@@ -49,6 +49,37 @@ docker container rm js-http
 docker container stop js-http
 ```
 
+## Dev in docker
+
+```sh
+docker run --rm node:16
+docker run --rm -it node:16
+
+# Start dev container
+docker run \
+  --interactive \
+  --tty \
+  --name js-http-dev \
+  -p 3000:3000 \
+  --volume $PWD:/app \
+  --workdir /app \
+  --entrypoint bash \
+  node:16
+
+# Dev command inside the container
+npm run dev
+
+# Re attach
+docker start --interactive --attach js-http-dev
+docker stop js-http-dev
+
+docker rm js-http-dev
+
+# Tests
+curl http://localhost:3000
+curl http://localhost:3000?name=you
+```
+
 ## Create a bad image
 
 ```sh
