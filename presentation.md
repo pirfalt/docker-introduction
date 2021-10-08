@@ -240,6 +240,8 @@ docker ps
 
 ## `docker-compose`
 
+https://docs.docker.com/compose/compose-file/compose-file-v3/
+
 ```sh
 docker-compose up
 docker-compose up -d
